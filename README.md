@@ -32,7 +32,7 @@ Prompto is an intelligent conversational AI chatbot powered by Facebook's **Blen
 ## 📁 Folder Structure
 
 Prompto/
-├── app.py
+├── prompto.py
 ├── templates/
 │ └── index.html
 └── README.md
