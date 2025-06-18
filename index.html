@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prompto - AI Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 650px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 25px #00f0ff30, 0 0 5px #00f0ff;
+      border: 1px solid #333;
+    }
+
+    .chat-header {
+      padding: 20px;
+      text-align: center;
+      background: #1f1f1f;
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom: 1px solid #333;
+      color: #00f0ff;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 15px;
+      border-top: 1px solid #333;
+      background: #191919;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      background: #2b2b2b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      background: #00f0ff;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      margin-left: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #00bccc;
+    }
+
+    .message {
+      max-width: 75%;
+      padding: 12px 15px;
+      border-radius: 20px;
+      word-wrap: break-word;
+      font-size: 15px;
+      animation: fadeIn 0.3s ease-in;
+      line-height: 1.4;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #0077ff;
+      color: white;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #333;
+      color: white;
+    }
+
+    .typing {
+      align-self: flex-start;
+      color: #888;
+      font-style: italic;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">💬 Talk to Prompto – Your AI Companion</div>
+    <div class="chat-box" id="chat_output"></div>
+    <div class="chat-input">
+      <input type="text" id="user_input" placeholder="Type your message..." onkeydown="if(event.key === 'Enter') sendMessage()"/>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function sendMessage() {
+      let userText = $("#user_input").val().trim();
+      if (!userText) return;
+
+      $("#chat_output").append(`<div class='message user'>${userText}</div>`);
+      $("#user_input").val("");
+
+      // Show typing animation
+      let typingDiv = $("<div class='typing' id='typing_indicator'>Prompto is typing...</div>");
+      $("#chat_output").append(typingDiv);
+      $(".chat-box").scrollTop($(".chat-box")[0].scrollHeight);
+
+      $.get("/get", { msg: userText }, function(data) {
+          $("#typing_indicator").remove();
+          $("#chat_output").append(`<div class='message bot'>${data}</div>`);
+          $(".chat-box").scrollTop($(".chat-box")[0].scrollHeight);
+      });
+    }
+  </script>
+</body>
+</html>
