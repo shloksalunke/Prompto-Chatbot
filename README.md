@@ -27,12 +27,7 @@ Prompto is an intelligent conversational AI chatbot powered by Facebook's **Blen
 
 ---
 
-## 🖥️ Demo
 
-https://user-link-if-hosted.com  
-_or run it locally (instructions below)_
-
----
 
 ## 📁 Folder Structure
 
@@ -40,31 +35,7 @@ Prompto/
 ├── app.py
 ├── templates/
 │ └── index.html
-├── static/ (optional)
-│ └── style.css / js files
 └── README.md
-
-yaml
-Copy
-Edit
-
----
-
-## ▶️ How to Run Locally
-
-1. **Clone the Repository**
-```bash
-git clone https://github.com/your-username/Prompto.git
-cd Prompto
-Install Dependencies
-pip install -r requirements.txt
-Run the App
-
-python app.py
-Open in Browser
-
-http://localhost:5000
-
 
 Clean and modern AI conversation interface.
 
